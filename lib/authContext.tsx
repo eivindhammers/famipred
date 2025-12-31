@@ -23,6 +23,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
+    // Note: Using localStorage for authentication state is not secure for production apps
+    // as it can be easily manipulated by users. For a private family app with trust-based
+    // security, this is acceptable. For production, consider httpOnly cookies or proper
+    // authentication tokens with server-side session management.
     const storedAuth = localStorage.getItem('famipred_auth');
     const storedName = localStorage.getItem('famipred_name');
     if (storedAuth === 'true' && storedName) {
