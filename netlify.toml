@@ -1,5 +1,6 @@
 # Netlify Configuration for Continuous Deployment
-# This file configures automatic builds when you push to GitHub
+# This file configures automatic builds and deployments when you push to GitHub
+# Includes: build command, publish directory, Next.js plugin, and Node.js version
 
 [build]
   command = "npm run build"

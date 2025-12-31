@@ -117,9 +117,9 @@ From now on, whenever you push changes to GitHub:
 
 You can monitor deployments in the Netlify dashboard under **Deploys**.
 
-### Option B: Deploy via Netlify UI (First-time Setup)
+### Alternative: UI-Based Initial Setup
 
-If you prefer to set up everything through the UI during initial deployment:
+If you prefer to set up everything through the UI during the initial connection:
 
 1. During site creation, click "Show advanced" before deploying
 2. Click "New variable" to add each environment variable

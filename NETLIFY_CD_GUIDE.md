@@ -58,7 +58,7 @@ git push origin main
 1. Netlify Dashboard → Deploys
 2. Find the working deployment
 3. Click options (•••) → Publish deploy
-4. Confirms rollback
+4. Confirm the rollback
 
 ## 📊 Monitoring Deployments
 
