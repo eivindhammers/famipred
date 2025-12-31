@@ -87,3 +87,14 @@ Applikasjonen inneholder 10 spådommer om:
 ## Lisens
 
 Dette prosjektet er laget for privat bruk av familien Hammersmark Olsen.
+
+## Sikkerhet
+
+Dette prosjektet bruker en enkel delt kodeord-autentisering for enkel bruk i familien. For et mer sikkert oppsett:
+
+1. Sett et sterkt, unikt kodeord i `NEXT_PUBLIC_SHARED_CODE`
+2. Del ikke kodeordet utenfor familien
+3. For produksjonsbruk, vurder å implementere Firebase Authentication med e-post/passord
+4. Hold Firebase Firestore-reglene oppdatert basert på dine sikkerhetsbehov
+
+**Viktig:** Denne appen er designet for privat familiebruk med tillitsbasert sikkerhet. Den er ikke egnet for offentlig tilgang eller sensitiv informasjon.

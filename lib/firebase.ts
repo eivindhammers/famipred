@@ -11,12 +11,22 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || ''
 };
 
+// Validate required Firebase configuration
+function isFirebaseConfigValid(): boolean {
+  return !!(
+    firebaseConfig.apiKey &&
+    firebaseConfig.authDomain &&
+    firebaseConfig.projectId &&
+    firebaseConfig.appId
+  );
+}
+
 let app: FirebaseApp | null = null;
 let auth: Auth | null = null;
 let db: Firestore | null = null;
 
-// Only initialize Firebase on the client side
-if (typeof window !== 'undefined') {
+// Only initialize Firebase on the client side with valid configuration
+if (typeof window !== 'undefined' && isFirebaseConfigValid()) {
   if (!getApps().length) {
     try {
       app = initializeApp(firebaseConfig);
@@ -30,6 +40,8 @@ if (typeof window !== 'undefined') {
     auth = getAuth(app);
     db = getFirestore(app);
   }
+} else if (typeof window !== 'undefined' && !isFirebaseConfigValid()) {
+  console.warn('Firebase configuration is incomplete. Please set all required environment variables.');
 }
 
 export { app, auth, db };

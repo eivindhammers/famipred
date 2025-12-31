@@ -11,7 +11,12 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const SHARED_CODE = process.env.NEXT_PUBLIC_SHARED_CODE || 'hammersmark2026';
+// Require the shared code to be set in environment variables for security
+const SHARED_CODE = process.env.NEXT_PUBLIC_SHARED_CODE;
+
+if (typeof window !== 'undefined' && !SHARED_CODE) {
+  console.error('NEXT_PUBLIC_SHARED_CODE environment variable is not set. Authentication will not work.');
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
