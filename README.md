@@ -52,14 +52,36 @@ npm run dev
 
 ## Deployment til Netlify
 
+### Continuous Deployment (Anbefalt)
+
+Applikasjonen er konfigurert for automatisk deployment via Netlify:
+
 1. Push koden til GitHub
-2. Gå til [Netlify](https://www.netlify.com/)
-3. Klikk "Add new site" → "Import an existing project"
-4. Velg ditt GitHub-repository
-5. Sett build-kommando: `npm run build`
-6. Sett publish-directory: `.next`
-7. Legg til environment variables fra `.env.local`
-8. Deploy!
+2. Koble GitHub-repositoriet til Netlify
+3. Sett miljøvariabler i Netlify dashboard (ikke i koden!)
+4. Netlify bygger og deployer automatisk ved hver push
+
+**Viktig:** Alle miljøvariabler (Firebase-config og kodeord) skal settes i Netlify dashboard under "Site settings → Environment variables", ikke committes til Git.
+
+### Quick Start
+
+1. Opprett Firebase-prosjekt og aktiver Firestore
+2. Gå til [Netlify](https://www.netlify.com/) og koble til GitHub-repo
+3. Sett disse miljøvariablene i Netlify:
+   - `NEXT_PUBLIC_FIREBASE_API_KEY`
+   - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+   - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+   - `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+   - `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+   - `NEXT_PUBLIC_FIREBASE_APP_ID`
+   - `NEXT_PUBLIC_SHARED_CODE`
+4. Netlify bygger og deployer automatisk
+
+### Dokumentasjon
+
+- **[DEPLOYMENT.md](DEPLOYMENT.md)**: Detaljert guide for Firebase og Netlify oppsett
+- **[NETLIFY_CD_GUIDE.md](NETLIFY_CD_GUIDE.md)**: Quick reference for continuous deployment
+- **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)**: Teknisk arkitektur og utvikling
 
 ## Bruk
 

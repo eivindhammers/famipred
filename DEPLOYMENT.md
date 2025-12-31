@@ -63,37 +63,70 @@ You'll need these values:
 - `messagingSenderId`
 - `appId`
 
-## Step 2: Deploy to Netlify
+## Step 2: Deploy to Netlify with Continuous Deployment
 
-### Option A: Deploy via Netlify UI (Recommended)
+Netlify will automatically deploy your app whenever you push changes to GitHub. This guide shows you how to set it up.
+
+### Connect Your Repository to Netlify
 
 1. Push your code to GitHub if you haven't already
-2. Go to [Netlify](https://www.netlify.com/)
+2. Go to [Netlify](https://www.netlify.com/) and log in
 3. Click "Add new site" → "Import an existing project"
 4. Choose "Deploy with GitHub"
 5. Authorize Netlify to access your GitHub repositories
 6. Select the `eivindhammers/famipred` repository
-7. Configure the build settings:
+7. Configure the build settings (Netlify will detect Next.js automatically):
    - **Build command:** `npm run build`
    - **Publish directory:** `.next`
    - **Base directory:** (leave empty)
+   - **Branch to deploy:** Select your main branch (e.g., `main` or `master`)
 
-8. Add environment variables:
-   - Click "Show advanced" → "New variable"
-   - Add the following variables with values from Firebase:
-     ```
-     NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
-     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
-     NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-     NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
-     NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-     NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-     NEXT_PUBLIC_SHARED_CODE=your_custom_password_here
-     ```
+### Set Environment Variables in Netlify
 
-9. Click "Deploy site"
+**Important:** Environment variables must be configured in Netlify, not committed to your repository.
 
-### Option B: Deploy via Netlify CLI
+1. In your Netlify site dashboard, go to **Site settings** → **Environment variables**
+2. Click **Add a variable** and add each of the following with values from Firebase:
+
+   ```
+   NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+   NEXT_PUBLIC_SHARED_CODE=your_custom_password_here
+   ```
+
+3. Make sure all variables are set for **Production** deployments
+4. Click **Save**
+
+### Initial Deployment
+
+1. After setting environment variables, click **Deploy site** (or trigger a new deploy if already deployed)
+2. Netlify will build and deploy your app automatically
+3. Once complete, you'll get a URL like `https://your-site-name.netlify.app`
+
+### Continuous Deployment in Action
+
+From now on, whenever you push changes to GitHub:
+- Netlify automatically detects the push
+- Builds your app with the latest code
+- Deploys the new version to production
+- No manual intervention needed!
+
+You can monitor deployments in the Netlify dashboard under **Deploys**.
+
+### Option B: Deploy via Netlify UI (First-time Setup)
+
+If you prefer to set up everything through the UI during initial deployment:
+
+1. During site creation, click "Show advanced" before deploying
+2. Click "New variable" to add each environment variable
+3. Add all 7 required environment variables (listed above)
+4. Click "Deploy site"
+
+This sets up both the initial deployment and continuous deployment at once.
 
 1. Install Netlify CLI:
 ```bash
@@ -147,14 +180,53 @@ netlify deploy --prod
 3. Each family member logs in with their name and the shared code
 4. Everyone can view and compare predictions!
 
+## Continuous Deployment Workflow
+
+Once your site is deployed, Netlify handles updates automatically:
+
+### Making Updates
+
+1. Make changes to your code locally
+2. Commit and push to GitHub:
+   ```bash
+   git add .
+   git commit -m "Your update message"
+   git push origin main
+   ```
+3. Netlify automatically detects the push and starts building
+4. New version goes live in 2-5 minutes
+5. Check deployment status at `https://app.netlify.com`
+
+### Updating Environment Variables
+
+To change Firebase config or shared password:
+
+1. Go to Netlify dashboard → **Site settings** → **Environment variables**
+2. Click the variable you want to change
+3. Update the value and click **Save**
+4. Trigger a new deployment:
+   - Go to **Deploys** tab
+   - Click **Trigger deploy** → **Deploy site**
+5. The new environment variable will be active after deployment
+
+**Note:** Environment variable changes require a new deployment to take effect.
+
+### Viewing Deployment History
+
+1. Go to your Netlify site dashboard
+2. Click **Deploys** tab
+3. See all deployments, their status, and logs
+4. Rollback to previous version if needed
+
 ## Updating the Shared Code
 
 To change the shared password:
 
 1. In Netlify, go to "Site settings" → "Environment variables"
-2. Edit `NEXT_PUBLIC_SHARED_CODE`
-3. Save and trigger a new deploy
-4. Share the new code with family members
+2. Click on `NEXT_PUBLIC_SHARED_CODE`
+3. Update the value and click **Save**
+4. Trigger a new deploy (Deploys → Trigger deploy → Deploy site)
+5. Share the new code with family members
 
 ## Troubleshooting
 
