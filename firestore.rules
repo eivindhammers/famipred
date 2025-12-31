@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read and write access to all predictions
+    // Note: In production, you should implement proper authentication
+    match /predictions/{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}
